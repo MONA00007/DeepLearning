@@ -1,5 +1,8 @@
 # coding: utf-8
 import numpy as np
+import sys
+import os
+sys.path.append(os.pardir)
 
 
 def smooth_curve(x):
@@ -27,10 +30,11 @@ def shuffle_dataset(x, t):
     x, t : 打乱的训练数据和监督数据
     """
     permutation = np.random.permutation(x.shape[0])
-    x = x[permutation,:] if x.ndim == 2 else x[permutation,:,:,:]
+    x = x[permutation, :] if x.ndim == 2 else x[permutation, :, :, :]
     t = t[permutation]
 
     return x, t
+
 
 def conv_output_size(input_size, filter_size, stride=1, pad=0):
     return (input_size + 2*pad - filter_size) / stride + 1
@@ -55,7 +59,8 @@ def im2col(input_data, filter_h, filter_w, stride=1, pad=0):
     out_h = (H + 2*pad - filter_h)//stride + 1
     out_w = (W + 2*pad - filter_w)//stride + 1
 
-    img = np.pad(input_data, [(0,0), (0,0), (pad, pad), (pad, pad)], 'constant')
+    img = np.pad(input_data, [(0, 0), (0, 0),
+                              (pad, pad), (pad, pad)], 'constant')
     col = np.zeros((N, C, filter_h, filter_w, out_h, out_w))
 
     for y in range(filter_h):
@@ -87,7 +92,8 @@ def col2im(col, input_shape, filter_h, filter_w, stride=1, pad=0):
     N, C, H, W = input_shape
     out_h = (H + 2*pad - filter_h)//stride + 1
     out_w = (W + 2*pad - filter_w)//stride + 1
-    col = col.reshape(N, out_h, out_w, C, filter_h, filter_w).transpose(0, 3, 4, 5, 1, 2)
+    col = col.reshape(N, out_h, out_w, C, filter_h,
+                      filter_w).transpose(0, 3, 4, 5, 1, 2)
 
     img = np.zeros((N, C, H + 2*pad + stride - 1, W + 2*pad + stride - 1))
     for y in range(filter_h):
