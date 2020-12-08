@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 from keras.datasets import reuters
+from keras import layers, models
 import numpy as np
 
 
@@ -26,3 +27,13 @@ def to_one_hot(labels, dimension=46):
         results[i, label] = 1.
 
     return results
+
+
+def build_model(train_data):
+    model = models.Sequential()
+    model.add(layers.Dense(64, activation='relu',
+                           input_shape=(train_data.shape[1],)))
+    model.add(layers.Dense(64, activation='relu'))
+    model.add(layers.Dense(1))
+    model.compile(optimizer='rmsprop', loss='mse', metrics=['mae'])
+    return model
