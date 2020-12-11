@@ -13,9 +13,9 @@ network.add(layers.Dense(512, activation='relu', input_shape=(28*28,)))
 network.add(layers.Dense(10, activation='softmax'))
 network.compile(optimizer='rmsprop',
                 loss='categorical_crossentropy', metrics=['accuracy'])
-print(train_images.shape)
+# print(train_images.shape)
 train_images = train_images.reshape((60000, 28*28))
-print(train_images.shape)
+# print(train_images.shape)
 train_images = train_images.astype('float32')/255
 test_images = test_images.reshape((10000, 28*28))
 test_images = test_images.astype('float32')/255

@@ -4,8 +4,8 @@
 from keras.datasets import boston_housing
 # from keras import layers, models
 from func import build_model
-import matplotlib.pyplot as plt
-import numpy as np
+# import matplotlib.pyplot as plt
+# import numpy as np
 
 
 (train_data, train_targets), (test_data,
